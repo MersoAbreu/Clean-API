@@ -10,6 +10,9 @@ import org.springframework.web.context.request.WebRequest;
 
 @RestControllerAdvice
 public class CustumizedResponseEntityvExceptionHandler {
+	
+
+
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Object> allExceptionsHandler(Exception exception, WebRequest request){
 		return new ResponseEntity<Object>(
@@ -17,5 +20,13 @@ public class CustumizedResponseEntityvExceptionHandler {
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		
 	}
+	
+	@ExceptionHandler(UsuarioNotFoundException.class)
+	public ResponseEntity<Object>usuarioNotFoundException(UsuarioNotFoundException exception, WebRequest request){
+		return new ResponseEntity<Object>(
+				new ExceptionResponse(exception.getMessage(), request.getDescription(false), LocalDateTime.now()), 
+				HttpStatus.NOT_FOUND);
+	}
+
 	
 }
